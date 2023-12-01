@@ -8,10 +8,10 @@ class Config:
     def __init__(self, config_file: str = None):
         """Initialize the config class."""
         self.config_file = config_file
-        self.retriever = "tavily"
+        self.retriever = "duckduckgo"
         self.llm_provider = "ChatOpenAI"
         self.fast_llm_model = "gpt-3.5-turbo-16k"
-        self.smart_llm_model = "gpt-4-1106-preview"
+        self.smart_llm_model = "gpt-3.5-turbo-16k"
         self.fast_token_limit = 2000
         self.smart_token_limit = 4000
         self.browse_chunk_max_length = 8192
