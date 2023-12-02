@@ -16,27 +16,27 @@ def get_retriever(retriever):
 
     """
     # match retriever:
-    if case == "tavily":
+    if retriever == "tavily":
         from gpt_researcher.retrievers import TavilySearch
         retriever = TavilySearch
-    if case == "google":
+    if retriever == "google":
         from gpt_researcher.retrievers import GoogleSearch
         retriever = GoogleSearch
-    if case == "searx":
+    if retriever == "searx":
         from gpt_researcher.retrievers import SearxSearch
         retriever = SearxSearch
-    if case == "serpapi":
+    if retriever == "serpapi":
         raise NotImplementedError("SerpApiSearch is not fully implemented yet.")
         from gpt_researcher.retrievers import SerpApiSearch
         retriever = SerpApiSearch
-    if case == "googleSerp":
+    if retriever == "googleSerp":
         from gpt_researcher.retrievers import SerperSearch
         retriever = SerperSearch
-    if case == "duckduckgo":
+    if retriever == "duckduckgo":
         from gpt_researcher.retrievers import Duckduckgo
         retriever = Duckduckgo
 
-    if case == _:
+    if retriever == _:
         raise Exception("Retriever not found.")
 
     return retriever
