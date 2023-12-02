@@ -15,29 +15,29 @@ def get_retriever(retriever):
         retriever: Retriever class
 
     """
-    match retriever:
-        case "tavily":
-            from gpt_researcher.retrievers import TavilySearch
-            retriever = TavilySearch
-        case "google":
-            from gpt_researcher.retrievers import GoogleSearch
-            retriever = GoogleSearch
-        case "searx":
-            from gpt_researcher.retrievers import SearxSearch
-            retriever = SearxSearch
-        case "serpapi":
-            raise NotImplementedError("SerpApiSearch is not fully implemented yet.")
-            from gpt_researcher.retrievers import SerpApiSearch
-            retriever = SerpApiSearch
-        case "googleSerp":
-            from gpt_researcher.retrievers import SerperSearch
-            retriever = SerperSearch
-        case "duckduckgo":
-            from gpt_researcher.retrievers import Duckduckgo
-            retriever = Duckduckgo
+    # match retriever:
+    if case == "tavily":
+        from gpt_researcher.retrievers import TavilySearch
+        retriever = TavilySearch
+    if case == "google":
+        from gpt_researcher.retrievers import GoogleSearch
+        retriever = GoogleSearch
+    if case == "searx":
+        from gpt_researcher.retrievers import SearxSearch
+        retriever = SearxSearch
+    if case == "serpapi":
+        raise NotImplementedError("SerpApiSearch is not fully implemented yet.")
+        from gpt_researcher.retrievers import SerpApiSearch
+        retriever = SerpApiSearch
+    if case == "googleSerp":
+        from gpt_researcher.retrievers import SerperSearch
+        retriever = SerperSearch
+    if case == "duckduckgo":
+        from gpt_researcher.retrievers import Duckduckgo
+        retriever = Duckduckgo
 
-        case _:
-            raise Exception("Retriever not found.")
+    if case == _:
+        raise Exception("Retriever not found.")
 
     return retriever
 
