@@ -36,7 +36,7 @@ def get_retriever(retriever):
         from gpt_researcher.retrievers import Duckduckgo
         retriever = Duckduckgo
 
-    if retriever == _:
+    if retriever == "":
         raise Exception("Retriever not found.")
 
     return retriever
