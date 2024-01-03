@@ -59,10 +59,10 @@ async def send_chat_completion_request(
     for message in messages:
         if message['role'] == "system" or message['role'] == "user":
             new_dict = {"role": "user", "parts":[message['content']]}
-            new_messages.append(my_dict)
+            new_messages.append(new_dict)
         else:
             new_dict = {"role": "model", "parts":[message['content']]}
-            new_messages.append(my_dict)
+            new_messages.append(new_dict)
 
     messages = new_messages
     if not stream:
