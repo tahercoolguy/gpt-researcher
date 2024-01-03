@@ -7,7 +7,8 @@ from colorama import Fore, Style
 from typing import Optional
 
 from gpt_researcher.master.prompts import auto_agent_instructions
-
+import os
+import google.generativeai as genai
 
 async def create_chat_completion(
         messages: list,  # type: ignore
@@ -34,7 +35,7 @@ async def create_chat_completion(
     # validate input
     if model is None:
         raise ValueError("Model cannot be None")
-    if max_tokens is not None and max_tokens > 8001:
+    if max_tokens is not None and max_tokens > 30000:
         raise ValueError(f"Max tokens cannot be more than 8001, but got {max_tokens}")
 
     # create response
@@ -54,15 +55,33 @@ import logging
 async def send_chat_completion_request(
         messages, model, temperature, max_tokens, stream, llm_provider, websocket
 ):
+    new_messages = []
+    for message in messages:
+        if message['role'] == "system" || message['role'] == "user":
+            new_dict = {"role": "user", "parts":[message['content']]}
+            new_messages.append(my_dict)
+        else:
+            new_dict = {"role": "model", "parts":[message['content']]}
+            new_messages.append(my_dict)
+
+    messages = new_messages
     if not stream:
-        result = lc_openai.ChatCompletion.create(
-            model=model,  # Change model here to use different models
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            provider=llm_provider,  # Change provider here to use a different API
-        )
-        return result["choices"][0]["message"]["content"]
+        os.environ['GOOGLE_API_KEY'] = "AIzaSyBBKHWk5C8Ar7A1EEWuhfX2jYqQAYZbPj0"
+        genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+        chat_model = genai.GenerativeModel('gemini-pro')
+        result = chat_model.generate_content(messages)
+        if 'block_reason' in str(chat.prompt_feedback):
+            result = lc_openai.ChatCompletion.create(
+                    model=model,  # Change model here to use different models
+                    messages=messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    provider=llm_provider,  # Change provider here to use a different API
+            )
+            final_result = result["choices"][0]["message"]["content"]
+        else:
+            final_result = result.text
+        return final_result
     else:
         return await stream_response(model, messages, temperature, max_tokens, llm_provider, websocket)
 
@@ -70,25 +89,43 @@ async def send_chat_completion_request(
 async def stream_response(model, messages, temperature, max_tokens, llm_provider, websocket=None):
     paragraph = ""
     response = ""
+    os.environ['GOOGLE_API_KEY'] = "AIzaSyBBKHWk5C8Ar7A1EEWuhfX2jYqQAYZbPj0"
+    genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+    chat_model = genai.GenerativeModel('gemini-pro')
+    result = chat_model.generate_content(messages, stream=True)
+    if 'block_reason' in str(chat.prompt_feedback):
 
-    for chunk in lc_openai.ChatCompletion.create(
-            model=model,
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            provider=llm_provider,
-            stream=True,
-    ):
-        content = chunk["choices"][0].get("delta", {}).get("content")
-        if content is not None:
-            response += content
-            paragraph += content
-            if "\n" in paragraph:
-                if websocket is not None:
-                    await websocket.send_json({"type": "report", "output": paragraph})
-                else:
-                    print(f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}")
-                paragraph = ""
+        for chunk in lc_openai.ChatCompletion.create(
+                model=model,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                provider=llm_provider,
+                stream=True,
+        ):
+            content = chunk["choices"][0].get("delta", {}).get("content")
+            if content is not None:
+                response += content
+                paragraph += content
+                if "\n" in paragraph:
+                    if websocket is not None:
+                        await websocket.send_json({"type": "report", "output": paragraph})
+                    else:
+                        print(f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}")
+                    paragraph = ""
+
+    else:
+        for chunk in response:
+            content = chunk.text
+            if content is not None:
+                response += content
+                paragraph += content
+                if "\n" in paragraph:
+                    if websocket is not None:
+                        await websocket.send_json({"type": "report", "output": paragraph})
+                    else:
+                        print(f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}")
+                    paragraph = ""
     return response
 
 
