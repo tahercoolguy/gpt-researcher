@@ -57,7 +57,7 @@ async def send_chat_completion_request(
 ):
     new_messages = []
     for message in messages:
-        if message['role'] == "system" || message['role'] == "user":
+        if message['role'] == "system" or message['role'] == "user":
             new_dict = {"role": "user", "parts":[message['content']]}
             new_messages.append(my_dict)
         else:
