@@ -55,11 +55,10 @@ import logging
 async def send_chat_completion_request(
         messages, model, temperature, max_tokens, stream, llm_provider, websocket
 ):
-    new_messages = []
+    new_messages = [{"role": "user", "parts":[]}]
     for message in messages:
         if message['role'] == "system" or message['role'] == "user":
-            new_dict = {"role": "user", "parts":[message['content']]}
-            new_messages.append(new_dict)
+            new_messages[0]['parts'].append(message['content'])
         else:
             new_dict = {"role": "model", "parts":[message['content']]}
             new_messages.append(new_dict)
