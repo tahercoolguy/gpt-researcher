@@ -70,7 +70,7 @@ async def send_chat_completion_request(
         genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
         chat_model = genai.GenerativeModel('gemini-pro')
         result = chat_model.generate_content(messages)
-        if 'block_reason' in str(chat.prompt_feedback):
+        if 'block_reason' in str(result.prompt_feedback):
             result = lc_openai.ChatCompletion.create(
                     model=model,  # Change model here to use different models
                     messages=messages,
@@ -93,7 +93,7 @@ async def stream_response(model, messages, temperature, max_tokens, llm_provider
     genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
     chat_model = genai.GenerativeModel('gemini-pro')
     result = chat_model.generate_content(messages, stream=True)
-    if 'block_reason' in str(chat.prompt_feedback):
+    if 'block_reason' in str(result.prompt_feedback):
 
         for chunk in lc_openai.ChatCompletion.create(
                 model=model,
