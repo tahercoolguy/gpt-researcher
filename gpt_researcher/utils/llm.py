@@ -64,7 +64,7 @@ async def send_chat_completion_request(
             new_messages.append(new_dict)
 
     messages = new_messages
-    print(messages)
+    # print(messages)
     if not stream:
         os.environ['GOOGLE_API_KEY'] = "AIzaSyBBKHWk5C8Ar7A1EEWuhfX2jYqQAYZbPj0"
         genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
@@ -115,7 +115,7 @@ async def stream_response(model, messages, temperature, max_tokens, llm_provider
                     paragraph = ""
 
     else:
-        for chunk in response:
+        for chunk in result:
             content = chunk.text
             if content is not None:
                 response += content
