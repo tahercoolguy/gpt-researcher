@@ -65,6 +65,7 @@ async def send_chat_completion_request(
             new_messages.append(new_dict)
 
     messages = new_messages
+    print(messages)
     if not stream:
         os.environ['GOOGLE_API_KEY'] = "AIzaSyBBKHWk5C8Ar7A1EEWuhfX2jYqQAYZbPj0"
         genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
