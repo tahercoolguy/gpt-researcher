@@ -85,7 +85,7 @@ async def stream_response(model, messages, temperature, max_tokens, llm_provider
             paragraph += content
             if "\n" in paragraph:
                 if websocket is not None:
-                    websocket.send_json({"type": "report", "output": paragraph}) #await
+                    websocket.send_json({"type": "report", "output": f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}"}) #await
                 else:
                     print(f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}")
                 paragraph = ""
