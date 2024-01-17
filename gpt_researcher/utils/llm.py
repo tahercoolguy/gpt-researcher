@@ -85,7 +85,13 @@ async def stream_response(model, messages, temperature, max_tokens, llm_provider
             paragraph += content
             if "\n" in paragraph:
                 if websocket is not None:
-                    websocket.send_json({"type": "report", "output": f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}"}) #await
+                    print(f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}")
+                    try:
+                        websocket.send_json({"type": "report", "output": f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}"}) #await
+                    except Exception as e:
+                        # Handle the exception gracefully
+                        print(f"An error occurred: {e}")
+                        # You can choose to log the excepti
                 else:
                     print(f"{Fore.GREEN}{paragraph}{Style.RESET_ALL}")
                 paragraph = ""
