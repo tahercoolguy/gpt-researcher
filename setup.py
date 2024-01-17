@@ -10,7 +10,7 @@ setup(
     name= "gpt-research-gemini", #"gpt-researcher",
     version="0.0.5",
     description="GPT Researcher is an autonomous agent designed for comprehensive online research on a variety of tasks.",
-    package_dir={'gpt_researcher': 'gpt_researcher'},
+    package_dir={'gpt_researcher_gemini': 'gpt_researcher_gemini'},
     packages=find_packages(),
     long_description=long_description,
     long_description_content_type="text/markdown",
