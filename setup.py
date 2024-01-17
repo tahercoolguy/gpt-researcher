@@ -7,7 +7,7 @@ with open("requirements.txt", "r") as f:
     reqs = [line.strip() for line in f if ('selenium' not in line and 'webdriver' not in line)]
 
 setup(
-    name= "gpt-research-gemini", #"gpt-researcher",
+    name= "gpt-researcher-gemini", #"gpt-researcher",
     version="0.0.5",
     description="GPT Researcher is an autonomous agent designed for comprehensive online research on a variety of tasks.",
     package_dir={'gpt_researcher_gemini': 'gpt_researcher_gemini'},
