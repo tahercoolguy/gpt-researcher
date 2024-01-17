@@ -1,7 +1,7 @@
 import asyncio
-from gpt_researcher.utils.llm import *
-from gpt_researcher.scraper import Scraper
-from gpt_researcher.master.prompts import *
+from gpt_researcher_gemini.utils.llm import *
+from gpt_researcher_gemini.scraper import Scraper
+from gpt_researcher_gemini.master.prompts import *
 import json
 
 
@@ -17,23 +17,23 @@ def get_retriever(retriever):
     """
     # match retriever:
     if retriever == "tavily":
-        from gpt_researcher.retrievers import TavilySearch
+        from gpt_researcher_gemini.retrievers import TavilySearch
         retriever = TavilySearch
     if retriever == "google":
-        from gpt_researcher.retrievers import GoogleSearch
+        from gpt_researcher_gemini.retrievers import GoogleSearch
         retriever = GoogleSearch
     if retriever == "searx":
-        from gpt_researcher.retrievers import SearxSearch
+        from gpt_researcher_gemini.retrievers import SearxSearch
         retriever = SearxSearch
     if retriever == "serpapi":
         raise NotImplementedError("SerpApiSearch is not fully implemented yet.")
-        from gpt_researcher.retrievers import SerpApiSearch
+        from gpt_researcher_gemini.retrievers import SerpApiSearch
         retriever = SerpApiSearch
     if retriever == "googleSerp":
-        from gpt_researcher.retrievers import SerperSearch
+        from gpt_researcher_gemini.retrievers import SerperSearch
         retriever = SerperSearch
     if retriever == "duckduckgo":
-        from gpt_researcher.retrievers import Duckduckgo
+        from gpt_researcher_gemini.retrievers import Duckduckgo
         retriever = Duckduckgo
 
     if retriever == "":

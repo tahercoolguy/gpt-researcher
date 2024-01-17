@@ -6,7 +6,7 @@ from langchain.adapters import openai as lc_openai
 from colorama import Fore, Style
 from typing import Optional
 
-from gpt_researcher.master.prompts import auto_agent_instructions
+from gpt_researcher_gemini.master.prompts import auto_agent_instructions
 import os
 import google.generativeai as genai
 

@@ -3,7 +3,7 @@ import asyncio
 import datetime
 from typing import List, Dict
 from fastapi import WebSocket
-from gpt_researcher.master.agent import GPTResearcher
+from gpt_researcher_gemini.master.agent import GPTResearcher
 
 
 class WebSocketManager:

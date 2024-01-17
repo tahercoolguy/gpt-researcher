@@ -1,8 +1,8 @@
 import time
-from gpt_researcher.config import Config
-from gpt_researcher.master.functions import *
-from gpt_researcher.context.compression import ContextCompressor
-from gpt_researcher.memory import Memory
+from gpt_researcher_gemini.config import Config
+from gpt_researcher_gemini.master.functions import *
+from gpt_researcher_gemini.context.compression import ContextCompressor
+from gpt_researcher_gemini.memory import Memory
 
 
 class GPTResearcher:
