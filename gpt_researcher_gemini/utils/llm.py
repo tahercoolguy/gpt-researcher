@@ -69,7 +69,7 @@ async def send_chat_completion_request(
         os.environ['GOOGLE_API_KEY'] = "AIzaSyBBKHWk5C8Ar7A1EEWuhfX2jYqQAYZbPj0"
         genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
         chat_model = genai.GenerativeModel('gemini-pro')
-        result = chat_model.generate_content(messages,safety_settings = [{"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE"}])
+        result = chat_model.generate_content(messages,safety_settings = [{"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE"}])
         if 'block_reason' in str(result.prompt_feedback):
             result = lc_openai.ChatCompletion.create(
                     model=model,  # Change model here to use different models
@@ -92,7 +92,7 @@ async def stream_response(model, messages, temperature, max_tokens, llm_provider
     os.environ['GOOGLE_API_KEY'] = "AIzaSyBBKHWk5C8Ar7A1EEWuhfX2jYqQAYZbPj0"
     genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
     chat_model = genai.GenerativeModel('gemini-pro')
-    result = chat_model.generate_content(messages, stream=True,safety_settings = [{"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE"}])
+    result = chat_model.generate_content(messages, stream=True,safety_settings = [{"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE"},{"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE"}])
     if 'block_reason' in str(result.prompt_feedback):
 
         for chunk in lc_openai.ChatCompletion.create(
