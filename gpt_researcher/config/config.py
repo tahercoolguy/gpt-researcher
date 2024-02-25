@@ -8,7 +8,7 @@ class Config:
     def __init__(self, config_file: str = None):
         """Initialize the config class."""
         self.config_file = config_file
-        self.retriever = "duckduckgo"
+        self.retriever = "searx" #"duckduckgo"
         self.llm_provider = "ChatOpenAI"
         self.fast_llm_model = "gpt-3.5-turbo-16k"
         self.smart_llm_model = "gpt-3.5-turbo-16k"
