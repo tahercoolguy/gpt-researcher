@@ -28,7 +28,7 @@ class SearxSearch():
         """
         # Get the API key
         try:
-            api_key = "https://search.multiplewords.com/"
+            api_key = "https://searcxng.multiplewords.com/"
         except:
             raise Exception("Searx URL key not found. Please set the SEARX_URL environment variable. "
                             "You can get your key from https://searx.space/")
@@ -40,7 +40,7 @@ class SearxSearch():
         Returns:
 
         """
-        searx = SearxSearchWrapper(searx_host="https://search.multiplewords.com/")
+        searx = SearxSearchWrapper(searx_host="https://searcxng.multiplewords.com/")
         results = searx.results(self.query, max_results)
         # Normalizing results to match the format of the other search APIs
         search_response = [{"href": obj["link"], "body": obj["snippet"]} for obj in results]
